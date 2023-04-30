@@ -111,7 +111,7 @@ fun EditProfileScreen (
                     )
                 },
                 navigationIcon =  {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(onClick = { navController.navigate(route = "profile_screen/$id/$id/") }) {
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = "Navigate back"
@@ -339,7 +339,11 @@ fun EditProfileScreen (
                                         }
                                         Log.d(ControlsProviderService.TAG, "UPDATE SHOULD BE COMPLETE!")
 
-                                        navController.navigate(route = "profile_screen/$id/$id/")
+                                        navController.navigate(route = "profile_screen/$id/$id/") {
+//                                            popUpTo(route = "feed_screen/$id/") {
+//                                                inclusive = true
+//                                            }
+                                        }
                                     }
                                 },
                                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary)

@@ -96,7 +96,7 @@ fun ProfileScreen(
                     )
                 },
                 navigationIcon =  {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(onClick = { navController.navigate(route = "feed_screen/$id/") }) {
                         Icon(
                             Icons.Filled.ArrowBack,
                             contentDescription = "Navigate back"

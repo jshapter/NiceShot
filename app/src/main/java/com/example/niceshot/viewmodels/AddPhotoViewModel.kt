@@ -128,7 +128,65 @@ fun Photo.toPhotoDetails(): PhotoDetails = PhotoDetails(
 
 
 
+class Image(
+    val make: String?,
+    val model: String?,
+    val mimeType: String?,
+    val focalLength: String?,
+    val aperture: String?,
+    val shutterSpeed: String?,
+    val dateTime: String?,
+    var valid: Boolean = false
+)
 
+fun imageConstructor(
+    context: Context,
+    uri: Uri
+) : Image {
+
+    var candidateImage: Image
+
+    context.contentResolver.openInputStream(uri).use { inputStream ->
+        val exif: ExifInterface? = inputStream?.let { ExifInterface(it) }
+        val make = exif?.getAttribute(ExifInterface.TAG_MAKE)
+        val model = exif?.getAttribute(ExifInterface.TAG_MODEL)
+        val mimeType: String? = context.contentResolver.getType(uri)
+        val imgFocalLengthRaw = exif?.getAttribute(ExifInterface.TAG_FOCAL_LENGTH)
+        var focalLength: String? = "0.0"
+        if ((imgFocalLengthRaw != null)
+            && (imgFocalLengthRaw.count() >= 4)
+            && isNumeric(imgFocalLengthRaw.substring(0, 4))
+        ) {
+            val focalLengthNumber = imgFocalLengthRaw.substring(0, 4)
+            focalLength = (focalLengthNumber.toFloat() / 1000).toString()
+        }
+        val aperture = exif?.getAttribute(ExifInterface.TAG_F_NUMBER)
+        val shutterSpeed = exif?.getAttribute(ExifInterface.TAG_EXPOSURE_TIME)
+        val dateTime = exif?.getAttribute(ExifInterface.TAG_DATETIME)
+//        val gps = FloatArray(2)
+//        exif?.getLatLong(gps)
+
+        candidateImage = Image(
+            make,
+            model,
+            mimeType,
+            focalLength,
+            aperture,
+            shutterSpeed,
+            dateTime
+        )
+    }
+    return candidateImage
+}
+
+fun isNumeric(toCheck: String): Boolean {
+    return toCheck.all { char -> char.isDigit() }
+}
+
+class CameraInstance(
+    val camFocalLength: Float,
+    val camAperture: Float
+)
 
 fun getCamInfo(
     context: Context
@@ -170,17 +228,11 @@ fun getCamInfo(
     return cameras
 }
 
-class CameraInstance(
-    val camFocalLength: Float,
-    val camAperture: Float
-)
-
 fun validateImage(
     context: Context,
     uri: Uri,
-    cameras: Array<CameraInstance>,
-    //   image: Image?
-): Image? {
+    cameras: Array<CameraInstance>
+): Image {
     var valid = false
 
     val deviceMake: String = Build.MANUFACTURER
@@ -188,79 +240,18 @@ fun validateImage(
 
     val image = imageConstructor(context, uri)
 
-    if (image != null) {
-        if (image.mimeType == "image/jpeg") {
-            if (image.make == deviceMake && image.model == deviceModel) {
-                Log.d(ContentValues.TAG, "DEVICE MATCH")
-                for (x in cameras) {
-                    if (x.camFocalLength.toString() == image.focalLength.toString() && x.camAperture.toString() == image.aperture.toString()) {
-                        valid = true
-                    }
+    if (image.mimeType == "image/jpeg") {
+        if (image.make == deviceMake && image.model == deviceModel) {
+            Log.d(ContentValues.TAG, "DEVICE MATCH")
+            for (x in cameras) {
+                if (x.camFocalLength.toString() == image.focalLength.toString() && x.camAperture.toString() == image.aperture.toString()) {
+                    valid = true
                 }
             }
         }
     }
 
-    if (image != null) {
-        image.valid = valid
-    }
+    image.valid = valid
 
     return image
-}
-
-fun imageConstructor(
-    context: Context,
-    uri: Uri
-) : Image {
-
-    var candidateImage: Image
-
-    context.contentResolver.openInputStream(uri).use { inputStream ->
-        val exif: ExifInterface? = inputStream?.let { ExifInterface(it) }
-        val make = exif?.getAttribute(ExifInterface.TAG_MAKE)
-        val model = exif?.getAttribute(ExifInterface.TAG_MODEL)
-        val mimeType: String? = context.contentResolver.getType(uri)
-        val imgFocalLengthRaw = exif?.getAttribute(ExifInterface.TAG_FOCAL_LENGTH)
-        var focalLength: String? = "0.0"
-        if (imgFocalLengthRaw != null
-            && imgFocalLengthRaw.count() >= 4
-            && isNumeric(imgFocalLengthRaw.substring(0, 4))
-        ) {
-            val focalLengthNumber = imgFocalLengthRaw.substring(0, 4)
-            focalLength = (focalLengthNumber.toFloat() / 1000).toString()
-        }
-        val aperture = exif?.getAttribute(ExifInterface.TAG_F_NUMBER)
-        val shutterSpeed = exif?.getAttribute(ExifInterface.TAG_EXPOSURE_TIME)
-        val dateTime = exif?.getAttribute(ExifInterface.TAG_DATETIME)
-//        val gps = FloatArray(2)
-//        exif?.getLatLong(gps)
-//        Log.d(TAG, "${gps[0]}")
-//        Log.d(TAG, "${exif?.getLatLong(gps)}")
-
-        candidateImage = Image(
-            make,
-            model,
-            mimeType,
-            focalLength,
-            aperture,
-            shutterSpeed,
-            dateTime
-        )
-    }
-    return candidateImage
-}
-
-class Image(
-    val make: String?,
-    val model: String?,
-    val mimeType: String?,
-    val focalLength: String?,
-    val aperture: String?,
-    val shutterSpeed: String?,
-    val dateTime: String?,
-    var valid: Boolean = false
-)
-
-fun isNumeric(toCheck: String): Boolean {
-    return toCheck.all { char -> char.isDigit() }
 }

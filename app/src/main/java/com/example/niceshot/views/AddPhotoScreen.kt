@@ -1,8 +1,10 @@
 package com.example.niceshot.views
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -71,16 +73,28 @@ fun AddPhotoScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
+
     val cameraDevices = getCamInfo(context)
     val image = uri?.let { validateImage(context, it, cameraDevices) }
 
+
+    var getDate = image?.dateTime?.subSequence(0, 10).toString()
+    Log.d(TAG, "getDate: $getDate")
+    if (getDate == "null") {
+        Log.d(TAG, "getDate is null")
+        getDate = "2021:07:16"
+        Log.d(TAG, "getDat echanged")
+
+    }
+    val formattedDate = getDate.replace(':', '-')
+    Log.d(TAG, "formattedDate: $formattedDate")
+    val toDate = LocalDate.parse(formattedDate)
+    Log.d(TAG, "toDate: $toDate")
+    val dateFormatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
+    Log.d(TAG, "dateFormatter: $dateFormatter")
+
     var captionState = remember { mutableStateOf(TextFieldValue()) }
     var locationState = remember { mutableStateOf(TextFieldValue()) }
-
-    val getDate = image?.dateTime?.subSequence(0, 10).toString()
-    val formattedDate = getDate.replace(':', '-')
-    val toDate = LocalDate.parse(formattedDate)
-    val dateFormatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
 
     Scaffold(
         topBar = {
