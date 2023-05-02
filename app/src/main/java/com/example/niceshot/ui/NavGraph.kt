@@ -1,7 +1,8 @@
 package com.example.niceshot.ui
 
 import android.net.Uri
-import androidx.compose.material3.ExperimentalMaterial3Api
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,7 +17,8 @@ import com.example.niceshot.views.ProfileScreen
 import com.example.niceshot.views.SignInScreen
 import com.example.niceshot.views.ViewPhotoScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -129,28 +131,5 @@ fun Navigation() {
                 )
             }
         }
-//        composable(
-//            route = Screen.EditPhotoScreen.route,
-//            arguments = listOf(
-//                navArgument("id") {
-//                    type = NavType.IntType
-//                },
-//                navArgument("photoId") {
-//                    type = NavType.IntType
-//                }
-//            )
-//        ) {
-//            val id = it.arguments?.getInt("id")
-//            val photoId = it.arguments?.getInt("photoId")
-//            if (id != null) {
-//                if (photoId != null) {
-//                    EditPhotoScreen(
-//                        id = id,
-//                        photoId = photoId,
-//                        navController = navController
-//                    )
-//                }
-//            }
-//        }
     }
 }

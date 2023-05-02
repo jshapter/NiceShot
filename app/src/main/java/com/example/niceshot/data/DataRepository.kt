@@ -23,12 +23,11 @@ interface DataRepository {
         profilePictureUri: String,
         id: Int
     )
-//    suspend fun updateProfile(firstName: String, id: Int?)
-
 
     fun getAllPhotosStream(): Flow<List<Photo>>
 
     fun getPhotoStream(photoId: Int): Flow<Photo?>
+
     fun getPhoto(photoId: Int): Photo?
 
     suspend fun insertPhoto(Photo: Photo)
@@ -36,9 +35,6 @@ interface DataRepository {
     suspend fun deletePhoto(Photo: Photo)
 
     suspend fun updatePhoto(Photo: Photo)
-
-//    fun getPhoto()
-
 
     fun getPhotosByUser(userId: Int): List<Photo>
 }

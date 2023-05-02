@@ -39,9 +39,6 @@ object AppViewModelProvider {
             EditProfileViewModel(niceShotApplication().container.dataRepository)
         }
 
-//        initializer {
-//            EditPhotoViewModel(niceShotApplication().container.dataRepository)
-//        }
         initializer {
             ViewPhotoViewModel(niceShotApplication().container.dataRepository)
         }

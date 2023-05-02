@@ -14,12 +14,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DataDao {
 
-    // User actions
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
-
-//    @Update
-//    suspend fun updateUser(firstName: String)
 
     @Query("UPDATE users SET firstName = :firstName, secondName = :secondName, email = :email, password = :password, profilePictureUri = :profilePictureUri WHERE userId = :id")
     suspend fun updateUser(
@@ -44,7 +40,6 @@ interface DataDao {
     fun getUserByEmail(email: String): User
 
 
-    // Photo actions
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(photo: Photo)
 
@@ -59,12 +54,6 @@ interface DataDao {
 
     @Query("SELECT * from photos WHERE photoId = :photoId")
     fun getPhoto(photoId: Int): Flow<Photo>
-
-
-    // Joined actions
-//    @Transaction
-//    @Query("SELECT * FROM users WHERE userId = :userId")
-//    suspend fun getUserWithPhotos(userId: Int): List<UserWithPhotos>
 
     @Transaction
     @Query("SELECT * FROM photos WHERE creatorId = :userId")

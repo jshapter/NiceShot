@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 class ViewPhotoViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
 
-    fun getPhoto(photoId: Int) : Photo? {
-        return dataRepository.getPhoto(photoId)
-    }
+//    fun getPhoto(photoId: Int) : Photo? {
+//        return dataRepository.getPhoto(photoId)
+//    }
 
 
 

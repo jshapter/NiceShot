@@ -24,8 +24,6 @@ class OfflineDataRepository(private val dataDao: DataDao) : DataRepository {
         profilePictureUri: String,
         id: Int
     ) = dataDao.updateUser(firstName, secondName, email, password, profilePictureUri, id)
-//    override suspend fun updateProfile(firstName: String, id: Int?) = photoDao.updateProfile(User)
-
 
     override fun getAllPhotosStream(): Flow<List<Photo>> = dataDao.getAllPhotos()
 
@@ -39,7 +37,6 @@ class OfflineDataRepository(private val dataDao: DataDao) : DataRepository {
     override suspend fun deletePhoto(Photo: Photo) = dataDao.delete(Photo)
 
     override suspend fun updatePhoto(Photo: Photo) = dataDao.update(Photo)
-
 
     override fun getPhotosByUser(userId: Int): List<Photo> = dataDao.getPhotosByUser(userId)
 }

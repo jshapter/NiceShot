@@ -56,9 +56,7 @@ fun ViewPhotoScreen(
                 showHideSystemUi(view, immersiveMode)
             }
             .pointerInput(Unit) {
-                detectTransformGestures { centroid, pan, zoom, rotation ->
-                //    scale.value *= zoom
-
+                detectTransformGestures { _, pan, zoom, _ ->
 
                     scale.value = when {
                         scale.value < 1f -> 1f
@@ -73,7 +71,6 @@ fun ViewPhotoScreen(
                         transY.value = 0f
                     }
 
-
                 }
             }
 
@@ -83,9 +80,8 @@ fun ViewPhotoScreen(
             contentDescription = "",
             modifier = Modifier
                 .fillMaxSize()
-                    .align(Alignment.Center) // keep the image centralized into the Box
+                    .align(Alignment.Center)
                 .graphicsLayer(
-                    // adding some zoom limits (min 50%, max 200%)
                     scaleX = maxOf(1f, minOf(3f, scale.value)),
                     scaleY = maxOf(1f, minOf(3f, scale.value)),
                 )
@@ -94,7 +90,6 @@ fun ViewPhotoScreen(
 }
 
 fun showHideSystemUi(view: View, immersiveMode: Boolean) {
-    // !! should be safe here since the view is part of an Activity
     val window = view.context.getActivity()!!.window
     if (immersiveMode) {
         WindowCompat.getInsetsController(window, view).show(
@@ -108,16 +103,3 @@ fun showHideSystemUi(view: View, immersiveMode: Boolean) {
         )
     }
 }
-//
-//fun Context.getActivity(): Activity? = when (this) {
-//    is Activity -> this
-//    // this recursion should be okay since we call getActivity on a view context
-//    // that should have an Activity as its baseContext at some point
-//    is ContextWrapper -> baseContext.getActivity()
-//    else -> null
-//}
-//
-//
-
-
-

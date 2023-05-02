@@ -17,38 +17,9 @@ import com.example.niceshot.data.entities.Photo
 
 class AddPhotoViewModel(private val dataRepository: DataRepository) : ViewModel() {
 
-
-//    private fun getPhoto(photoId: Int) : Photo? {
-//        return dataRepository.getPhoto(photoId)
-//    }
-
-//    suspend fun deletePhoto(photoId: Int) {
-//        val photo = getPhoto(photoId)
-//        if (photo != null) {
-//            dataRepository.deletePhoto(photo)
-//        }
-//    }
-
-
-
-    /**
-     * Holds current photo ui state
-     */
     var photoUiState by mutableStateOf(PhotoUiState())
         private set
 
-    /**
-     * Updates the [photoUiState] with the value provided in the argument. This method also triggers
-     * a validation for input values.
-     */
-    fun updateUiState(photoDetails: PhotoDetails) {
-        photoUiState =
-            PhotoUiState(photoDetails = photoDetails, isEntryValid = validateInput(photoDetails))
-    }
-
-    /**
-     * Inserts an [photo] in the Room database
-     */
     suspend fun savePhoto() {
         if (validateInput()) {
             dataRepository.insertPhoto(photoUiState.photoDetails.toPhoto())
@@ -57,15 +28,11 @@ class AddPhotoViewModel(private val dataRepository: DataRepository) : ViewModel(
 
     private fun validateInput(uiState: PhotoDetails = photoUiState.photoDetails): Boolean {
         return with(uiState) {
-            //        name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
             uri.isNotBlank()
         }
     }
 }
 
-/**
- * Represents Ui State for an photo.
- */
 data class PhotoUiState(
     val photoDetails: PhotoDetails = PhotoDetails(),
     val isEntryValid: Boolean = false
@@ -83,11 +50,6 @@ data class PhotoDetails(
     var dateUploaded: String = ""
 )
 
-/**
- * Extension function to convert [photoUiState] to [photo]. If the value of [photoUiState.price] is
- * not a valid [Double], then the price will be set to 0.0. Similarly if the value of
- * [photoUiState] is not a valid [Int], then the quantity will be set to 0
- */
 fun PhotoDetails.toPhoto(): Photo = Photo(
     uri = uri,
     makeModel = makeModel,
@@ -99,33 +61,6 @@ fun PhotoDetails.toPhoto(): Photo = Photo(
     shutterSpeed = shutterSpeed,
     dateUploaded = dateUploaded
 )
-
-/**
- * Extension function to convert [photo] to [photoUiState]
- */
-fun Photo.toPhotoUiState(isEntryValid: Boolean = false): PhotoUiState = PhotoUiState(
-    photoDetails = this.toPhotoDetails(),
-    isEntryValid = isEntryValid
-)
-
-/**
- * Extension function to convert [photo] to [photoDetails]
- */
-fun Photo.toPhotoDetails(): PhotoDetails = PhotoDetails(
-    uri = uri,
-    makeModel = makeModel,
-    dateTime = dateTime,
-    creatorId = creatorId,
-    location = location,
-    caption = caption,
-    aperture = aperture,
-    shutterSpeed = shutterSpeed,
-    dateUploaded = dateUploaded
-)
-
-
-
-
 
 
 class Image(

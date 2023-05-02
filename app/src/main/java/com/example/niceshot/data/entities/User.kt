@@ -12,7 +12,5 @@ data class User(
     val email: String,
     val password: String,
     val created: String,
-//    val posts: Int,
-
     val profilePictureUri: String
 )

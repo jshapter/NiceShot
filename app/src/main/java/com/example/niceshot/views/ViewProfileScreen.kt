@@ -17,22 +17,18 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PersonAdd
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -47,11 +43,8 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -141,8 +134,6 @@ fun ProfileBody(
     modifier: Modifier,
     navController: NavController
 ) {
-    val testDate = "April 2023"
-    val testPhotos = 4
 
     val photoList = selectedId.let { viewModel.userPhotos(it) }
 
@@ -159,7 +150,7 @@ fun ProfileBody(
                         .padding(20.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    user.profilePictureUri?.let { Log.d(ContentValues.TAG, "propic uri: $it") }
+                    user.profilePictureUri.let { Log.d(ContentValues.TAG, "propic uri: $it") }
                     if (user.profilePictureUri != "null") {
                         AsyncImage(
                             model = user.profilePictureUri,
@@ -186,7 +177,7 @@ fun ProfileBody(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "${user.firstName}${user.secondName}",
+                        text = "${user.firstName} ${user.secondName}",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -207,24 +198,8 @@ fun ProfileBody(
                         text = "Member since: ${user.created}"
                     )
                 }
-//                Row(
-//                    modifier
-//                        .padding(start = 20.dp)
-//                        .clickable { },
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    Icon(
-//                        Icons.Filled.Warning,
-//                        contentDescription = "",
-//                        modifier.padding(5.dp)
-//                    )
-//                    Text(
-//                        text = "Average posts per week: $testPhotos"
-//                    )
-//                }
                 Divider(modifier.padding(20.dp, 10.dp))
             }
-
 
             if (photoList.isEmpty()) {
                 Box(
@@ -233,7 +208,6 @@ fun ProfileBody(
                 ) {
                     Text(
                         text = "no photos",
-                        //    style = MaterialTheme.typography.subtitle2
                     )
                 }
 
@@ -252,7 +226,6 @@ fun ProfileBody(
 fun PhotoGrid(
     id: Int,
     photoList: List<Photo>,
-    modifier: Modifier = Modifier,
     navController: NavController
 ) {
     LazyVerticalGrid(

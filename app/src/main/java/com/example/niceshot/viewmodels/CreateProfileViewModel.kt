@@ -12,15 +12,9 @@ class CreateProfileViewModel (private val dataRepository: DataRepository) : View
     var createProfileUiState by mutableStateOf(UserUiState())
         private set
 
-    fun updateUiState(userDetails: UserDetails) {
-        createProfileUiState = UserUiState(userDetails = userDetails)
-    }
-
     suspend fun createAccount() {
         dataRepository.insertUser(createProfileUiState.userDetails.toUser())
     }
-
-
 }
 
 data class UserUiState(
@@ -44,11 +38,3 @@ fun UserDetails.toUser(): User = User(
     profilePictureUri = profilePictureUri,
     created = created
 )
-
-//fun User.toUserDetails(): UserDetails = UserDetails(
-//    firstName = firstName,
-//    secondName = secondName,
-//    email = email,
-//    password = password,
-////    profilePicture = profilePicture
-//)

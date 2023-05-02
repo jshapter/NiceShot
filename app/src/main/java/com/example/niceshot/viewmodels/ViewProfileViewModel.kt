@@ -26,5 +26,3 @@ class ViewProfileViewModel (
     }
 
 }
-
-data class ProfileUiState(val photoList: List<Photo> = listOf())

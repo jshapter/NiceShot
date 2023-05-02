@@ -3,12 +3,14 @@ package com.example.niceshot.views
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.service.controls.ControlsProviderService
 import android.text.style.UnderlineSpan
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -72,6 +74,7 @@ import kotlinx.coroutines.launch
 import java.time.format.TextStyle
 
 
+@RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen (
@@ -337,13 +340,7 @@ fun EditProfileScreen (
                                                 }
                                             }
                                         }
-                                        Log.d(ControlsProviderService.TAG, "UPDATE SHOULD BE COMPLETE!")
-
-                                        navController.navigate(route = "profile_screen/$id/$id/") {
-//                                            popUpTo(route = "feed_screen/$id/") {
-//                                                inclusive = true
-//                                            }
-                                        }
+                                        navController.navigate(route = "profile_screen/$id/$id/")
                                     }
                                 },
                                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.tertiary)
@@ -362,8 +359,6 @@ fun EditProfileScreen (
                                     .clickable {
 
                                         coroutineScope.launch {
-
-
 
                                             if (id != null) {
                                                 viewModel.deleteUser(id)

@@ -43,7 +43,6 @@ class EditProfileViewModel (private val dataRepository: DataRepository) : ViewMo
         profilePictureUri: String,
         id: Int
     ) {
-        //val updatedUser = userUiState.userDetails.toUser()
         dataRepository.updateUser(
             firstName,
             secondName,
@@ -52,35 +51,5 @@ class EditProfileViewModel (private val dataRepository: DataRepository) : ViewMo
             profilePictureUri,
             id
         )
-        // viewModel.createProfileUiState.userDetails.toUser()
     }
-
 }
-
-data class UserUiState2(
-    val userDetails: UserDetails = UserDetails()
-)
-
-//data class UserDetails(
-//    var firstName: String = "",
-//    var secondName: String = "",
-//    var email: String = "",
-//    var password: String = "",
-//    var profilePictureUri: String = ""
-//)
-//
-//fun UserDetails.toUser(): User = User(
-//    firstName = firstName,
-//    secondName = secondName,
-//    email = email,
-//    password = password,
-//    profilePictureUri = profilePictureUri
-//)
-
-fun User.toUserDetails(): UserDetails = UserDetails(
-    firstName = firstName,
-    secondName = secondName,
-    email = email,
-    password = password,
-    profilePictureUri = profilePictureUri
-)
