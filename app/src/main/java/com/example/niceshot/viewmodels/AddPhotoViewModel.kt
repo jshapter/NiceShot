@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
+//noinspection ExifInterface
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
@@ -15,7 +16,9 @@ import androidx.lifecycle.ViewModel
 import com.example.niceshot.data.DataRepository
 import com.example.niceshot.data.entities.Photo
 
-class AddPhotoViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class AddPhotoViewModel (
+    private val dataRepository: DataRepository
+) : ViewModel() {
 
     var photoUiState by mutableStateOf(PhotoUiState())
         private set

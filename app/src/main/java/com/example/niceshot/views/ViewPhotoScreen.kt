@@ -77,7 +77,7 @@ fun ViewPhotoScreen(
     ) {
         AsyncImage(
             model = uri,
-            contentDescription = "",
+            contentDescription = "photo",
             modifier = Modifier
                 .fillMaxSize()
                     .align(Alignment.Center)

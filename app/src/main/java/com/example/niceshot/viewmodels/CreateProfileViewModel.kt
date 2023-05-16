@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.example.niceshot.data.DataRepository
 import com.example.niceshot.data.entities.User
 
-class CreateProfileViewModel (private val dataRepository: DataRepository) : ViewModel() {
+class CreateProfileViewModel (
+    private val dataRepository: DataRepository
+) : ViewModel() {
 
     var createProfileUiState by mutableStateOf(UserUiState())
         private set

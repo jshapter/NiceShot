@@ -56,6 +56,7 @@ fun Navigation() {
                 )
             }
         }
+
         composable(
             route = Screen.AddPhotoScreen.route,
             arguments = listOf(
@@ -77,6 +78,7 @@ fun Navigation() {
                 )
             }
         }
+
         composable(
             route = Screen.ProfileScreen.route,
             arguments = listOf(
@@ -100,6 +102,7 @@ fun Navigation() {
                 }
             }
         }
+
         composable(
             route = Screen.ViewPhotoScreen.route,
             arguments = listOf(
@@ -115,6 +118,7 @@ fun Navigation() {
                 )
             }
         }
+
         composable(
             route = Screen.EditProfileScreen.route,
             arguments = listOf(

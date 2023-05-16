@@ -103,7 +103,7 @@ fun CreateProfileScreen (
             ) {
                 if (selectedImageUri != null) {
                     AsyncImage(model = selectedImageUri,
-                        contentDescription = "",
+                        contentDescription = "profile picture",
                         modifier = Modifier
                             .size(128.dp)
                             .clip(CircleShape)
@@ -126,7 +126,7 @@ fun CreateProfileScreen (
                             .size(128.dp)
                     ) {
                         Icon(Icons.Outlined.AccountCircle,
-                            contentDescription = "",
+                            contentDescription = "no profile picture",
                             modifier = Modifier
                                 .fillMaxSize()
                         )
@@ -139,11 +139,11 @@ fun CreateProfileScreen (
             ) {
                 if (selectedImageUri != null) {
                     Icon(
-                        Icons.Filled.Edit, contentDescription = ""
+                        Icons.Filled.Edit, contentDescription = "edit profile picture"
                     )
                 } else {
                     Icon(
-                        Icons.Filled.AddCircle, contentDescription = ""
+                        Icons.Filled.AddCircle, contentDescription = "add profile picture"
                     )
                 }
                 Text(

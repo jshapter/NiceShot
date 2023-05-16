@@ -1,11 +1,9 @@
 package com.example.niceshot.views
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.service.controls.ControlsProviderService
-import android.text.style.UnderlineSpan
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -27,10 +25,8 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -71,7 +67,6 @@ import coil.compose.AsyncImage
 import com.example.niceshot.AppViewModelProvider
 import com.example.niceshot.viewmodels.EditProfileViewModel
 import kotlinx.coroutines.launch
-import java.time.format.TextStyle
 
 
 @RequiresApi(Build.VERSION_CODES.R)
@@ -87,14 +82,6 @@ fun EditProfileScreen (
     val context = LocalContext.current
 
     val user = id?.let { viewModel.returnUser(it) }
-
-    val photoList = id.let {
-        if (it != null) {
-            viewModel.userPhotos(it)
-        }
-    }
-
-    Log.d(TAG, "photolist: ${photoList}")
 
     var selectedImageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -133,8 +120,9 @@ fun EditProfileScreen (
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     if (selectedImageUri != null) {
-                        AsyncImage(model = selectedImageUri,
-                            contentDescription = "",
+                        AsyncImage(
+                            model = selectedImageUri,
+                            contentDescription = "profile picture",
                             modifier = Modifier
                                 .size(100.dp)
                                 .clip(CircleShape)
@@ -145,7 +133,7 @@ fun EditProfileScreen (
                         if (user.profilePictureUri != "null") {
                             AsyncImage(
                                 model = user.profilePictureUri,
-                                contentDescription = "",
+                                contentDescription = "profile picture",
                                 modifier = Modifier
                                     .size(100.dp)
                                     .clip(CircleShape)
@@ -181,11 +169,13 @@ fun EditProfileScreen (
                     {
                         if (selectedImageUri != null) {
                             Icon(
-                                Icons.Filled.Edit, contentDescription = ""
+                                Icons.Filled.Edit,
+                                contentDescription = "edit profile picture"
                             )
                         } else {
                             Icon(
-                                Icons.Filled.AddCircle, contentDescription = ""
+                                Icons.Filled.AddCircle,
+                                contentDescription = "add profile picture"
                             )
                         }
 
@@ -198,7 +188,7 @@ fun EditProfileScreen (
                     Divider()
 
                     val firstNameState = remember { mutableStateOf(user?.let { TextFieldValue(it.firstName) }) }
-                    firstNameState.value?.let {
+                    firstNameState.value?.let { it ->
                         OutlinedTextField(
                             value = it,
                             onValueChange = { firstNameState.value = it },
@@ -218,7 +208,7 @@ fun EditProfileScreen (
                     }
 
                     val secondNameState = remember { mutableStateOf(user?.let { TextFieldValue(it.secondName) }) }
-                    secondNameState.value?.let {
+                    secondNameState.value?.let { it ->
                         OutlinedTextField(
                             value = it,
                             onValueChange = { secondNameState.value = it },
@@ -238,7 +228,7 @@ fun EditProfileScreen (
                     }
 
                     val emailState = remember { mutableStateOf(user?.let { TextFieldValue(it.email) }) }
-                    emailState.value?.let {
+                    emailState.value?.let { it ->
                         OutlinedTextField(
                             value = it,
                             onValueChange = { emailState.value = it },
@@ -260,7 +250,7 @@ fun EditProfileScreen (
 
                     var passwordVisible by rememberSaveable { mutableStateOf(false) }
                     val passwordState = remember { mutableStateOf(user?.let { TextFieldValue(it.password) }) }
-                    passwordState.value?.let {
+                    passwordState.value?.let { it ->
                         OutlinedTextField(
                             value = it,
                             onValueChange = { passwordState.value = it },

@@ -92,7 +92,7 @@ fun ProfileScreen(
                     IconButton(onClick = { navController.navigate(route = "feed_screen/$id/") }) {
                         Icon(
                             Icons.Filled.ArrowBack,
-                            contentDescription = "Navigate back"
+                            contentDescription = "navigate back"
                         )
                     }
                 },
@@ -101,14 +101,14 @@ fun ProfileScreen(
                         IconButton(onClick = { navController.navigate(route = "edit_profile_screen/$id/") }) {
                             Icon(
                                 Icons.Filled.Edit,
-                                contentDescription = ""
+                                contentDescription = "edit profile"
                             )
                         }
                     } else {
                         IconButton(onClick = {  }) {
                             Icon(
                                 Icons.Filled.PersonAdd,
-                                contentDescription = ""
+                                contentDescription = "add contact"
                             )
                         }
                     }
@@ -118,7 +118,13 @@ fun ProfileScreen(
         },
         content = { innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
-                ProfileBody(id = id, user = user, viewModel = viewModel, selectedId = selectedId, modifier = modifier, navController = navController)
+                ProfileBody(
+                    user = user,
+                    viewModel = viewModel,
+                    selectedId = selectedId,
+                    modifier = modifier,
+                    navController = navController
+                )
             }
 
         }
@@ -127,7 +133,6 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileBody(
-    id: Int,
     user: User,
     viewModel: ViewProfileViewModel,
     selectedId: Int,
@@ -150,11 +155,11 @@ fun ProfileBody(
                         .padding(20.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    user.profilePictureUri.let { Log.d(ContentValues.TAG, "propic uri: $it") }
+                    user.profilePictureUri.let { Log.d(ContentValues.TAG, "tropic uri: $it") }
                     if (user.profilePictureUri != "null") {
                         AsyncImage(
                             model = user.profilePictureUri,
-                            contentDescription = "Profile picture.",
+                            contentDescription = "profile picture.",
                             modifier = Modifier
                                 .size(150.dp)
                                 .clip(CircleShape)
@@ -164,7 +169,7 @@ fun ProfileBody(
                     } else {
                         Icon(
                             Icons.Filled.AccountCircle,
-                            contentDescription = "",
+                            contentDescription = "no profile picture",
                             modifier
                                 .size(150.dp)
                                 .border(4.dp, MaterialTheme.colorScheme.tertiary, CircleShape)
@@ -191,7 +196,7 @@ fun ProfileBody(
                 ) {
                     Icon(
                         Icons.Filled.DateRange,
-                        contentDescription = "",
+                        contentDescription = "member since",
                         modifier.padding(5.dp)
                     )
                     Text(
@@ -213,7 +218,6 @@ fun ProfileBody(
 
             } else {
                 PhotoGrid(
-                    id = id,
                     photoList = photoList,
                     navController = navController
                 )
@@ -224,7 +228,6 @@ fun ProfileBody(
 
 @Composable
 fun PhotoGrid(
-    id: Int,
     photoList: List<Photo>,
     navController: NavController
 ) {
@@ -239,7 +242,6 @@ fun PhotoGrid(
     ) {
         items(photoList, key = { it.photoId}) { photo ->
             Thumbnail(
-                id = id,
                 photo = photo,
                 navController = navController,
             )
@@ -249,13 +251,12 @@ fun PhotoGrid(
 
 @Composable
 fun Thumbnail(
-    id: Int,
     photo: Photo,
     navController: NavController
 ) {
     AsyncImage(
         model = Uri.parse(photo.uri),
-        contentDescription = "",
+        contentDescription = "photo thumbnail",
         modifier = Modifier
             .clickable {
                 val uriParse = Uri.parse(photo.uri)

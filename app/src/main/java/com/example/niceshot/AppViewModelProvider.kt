@@ -9,7 +9,6 @@ import com.example.niceshot.viewmodels.CreateProfileViewModel
 import com.example.niceshot.viewmodels.EditProfileViewModel
 import com.example.niceshot.viewmodels.FeedViewModel
 import com.example.niceshot.viewmodels.SignInViewModel
-import com.example.niceshot.viewmodels.ViewPhotoViewModel
 import com.example.niceshot.viewmodels.ViewProfileViewModel
 
 object AppViewModelProvider {
@@ -24,7 +23,7 @@ object AppViewModelProvider {
         }
 
         initializer {
-            SignInViewModel(niceShotApplication().container.dataRepository)
+            SignInViewModel()
         }
 
         initializer {
@@ -39,9 +38,9 @@ object AppViewModelProvider {
             EditProfileViewModel(niceShotApplication().container.dataRepository)
         }
 
-        initializer {
-            ViewPhotoViewModel(niceShotApplication().container.dataRepository)
-        }
+//        initializer {
+//            ViewPhotoViewModel(niceShotApplication().container.dataRepository)
+//        }
     }
 }
 

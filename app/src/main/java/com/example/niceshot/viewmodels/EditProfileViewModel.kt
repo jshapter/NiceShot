@@ -5,21 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.niceshot.data.DataRepository
-import com.example.niceshot.data.entities.Photo
 import com.example.niceshot.data.entities.User
 
-class EditProfileViewModel (private val dataRepository: DataRepository) : ViewModel() {
+class EditProfileViewModel (
+    private val dataRepository: DataRepository
+) : ViewModel() {
 
     var editProfileUiState by mutableStateOf(UserUiState())
 
     private val rep = dataRepository
-
-    fun userPhotos(
-        selectedId: Int,
-        photoRepository: DataRepository = rep
-    ) : List<Photo> {
-        return photoRepository.getPhotosByUser(selectedId)
-    }
 
     suspend fun deleteUser (
         selectedId: Int,

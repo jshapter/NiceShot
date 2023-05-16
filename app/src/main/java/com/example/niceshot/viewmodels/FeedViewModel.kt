@@ -10,15 +10,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class FeedViewModel(dataRepository: DataRepository) : ViewModel() {
+class FeedViewModel (
+    dataRepository: DataRepository
+) : ViewModel() {
 
     private val rep = dataRepository
 
     fun returnUser (
         id: Int,
-        photoRepository: DataRepository = rep
+        dataRepository: DataRepository = rep
     ) : User {
-        return photoRepository.getUserStream(id)
+        return dataRepository.getUserStream(id)
     }
 
     val feedUiState: StateFlow<FeedUiState> =

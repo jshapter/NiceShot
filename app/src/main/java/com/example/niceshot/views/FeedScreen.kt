@@ -120,7 +120,7 @@ fun FeedScreen(
                 )
 
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Settings, contentDescription = null) },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = "settings") },
                     label = { Text(text = "Settings") },
                     selected = Icons.Default.Settings == selectedItem.value,
                     onClick = {
@@ -129,17 +129,16 @@ fun FeedScreen(
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Info, contentDescription = null) },
+                    icon = { Icon(Icons.Default.Info, contentDescription = "app info") },
                     label = { Text(text = "About") },
                     selected = Icons.Default.Info == selectedItem.value,
                     onClick = {
                         scope.launch { drawerState.close() }
-                        //    selectedItem.value = item
                     },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
                 NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Logout, contentDescription = null) },
+                    icon = { Icon(Icons.Default.Logout, contentDescription = "log out") },
                     label = { Text(text = "Logout") },
                     selected = Icons.Default.Logout == selectedItem.value,
                     onClick = {
@@ -212,7 +211,7 @@ fun AppBar (
             ) {
                 Icon(
                     Icons.Outlined.Menu,
-                    contentDescription = "Localized description"
+                    contentDescription = "menu"
                 )
             }
         },
@@ -255,7 +254,7 @@ fun BottomBar(
         {
             Icon(
                 Icons.Outlined.Bookmark,
-                contentDescription = "",
+                contentDescription = "save",
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -278,7 +277,7 @@ fun BottomBar(
         {
             Icon(
                 Icons.Outlined.Group,
-                contentDescription = "",
+                contentDescription = "circles",
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -376,7 +375,7 @@ fun PhotoCard(
                     ) {
                         Icon(
                             Icons.Filled.AccountCircle,
-                            contentDescription = "",
+                            contentDescription = "no profile picture",
                             modifier = Modifier
                                 .size(48.dp)
                                 .border(2.dp, MaterialTheme.colorScheme.secondary, CircleShape)
@@ -401,13 +400,13 @@ fun PhotoCard(
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(
                         Icons.Filled.MoreVert,
-                        contentDescription = "More Vert"
+                        contentDescription = "options"
                     )
                 }
             }
             AsyncImage(
                 model = photo.uri,
-                contentDescription = "",
+                contentDescription = "photo",
                 modifier = Modifier.clickable {
                     val uriParse = Uri.parse(photo.uri)
                     val encodedUri = Uri.encode(uriParse.toString())
@@ -427,7 +426,7 @@ fun PhotoCard(
                             if (photo.location != "") {
                                 Icon(
                                     Icons.Filled.Place,
-                                    contentDescription = "",
+                                    contentDescription = "location",
                                     modifier = Modifier.size(22.dp)
                                 )
                                 Text(
@@ -448,7 +447,7 @@ fun PhotoCard(
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(
                             Icons.Filled.ExpandLess,
-                            contentDescription = "Dropdown"
+                            contentDescription = "see more"
                         )
                     }
                 }
@@ -471,7 +470,6 @@ fun PhotoCard(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
-
 
                 Row {
                     IconButton(onClick = { /*TODO*/ }) {

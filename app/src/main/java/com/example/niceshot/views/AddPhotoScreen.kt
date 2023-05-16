@@ -73,19 +73,15 @@ fun AddPhotoScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-
     val cameraDevices = getCamInfo(context)
     val image = uri?.let { validateImage(context, it, cameraDevices) }
-
 
     var getDate = image?.dateTime?.subSequence(0, 10).toString()
     Log.d(TAG, "getDate: $getDate")
     if (getDate == "null") {
-        Log.d(TAG, "getDate is null")
         getDate = "2021:07:16"
-        Log.d(TAG, "getDat echanged")
-
     }
+
     val formattedDate = getDate.replace(':', '-')
     Log.d(TAG, "formattedDate: $formattedDate")
     val toDate = LocalDate.parse(formattedDate)
@@ -170,19 +166,19 @@ fun AddPhotoScreen(
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                                 ) {
-                                    Icon(Icons.Filled.DateRange, contentDescription = "")
+                                    Icon(Icons.Filled.DateRange, contentDescription = "date taken")
                                     Text(text = toDate.format(dateFormatter))
                                 }
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                                 ) {
-                                    Icon(Icons.Filled.Camera, contentDescription = "")
+                                    Icon(Icons.Filled.Camera, contentDescription = "aperture value")
                                     Text(text = "f/${image.aperture}")
                                 }
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                                 ) {
-                                    Icon(Icons.Filled.ShutterSpeed, contentDescription = "")
+                                    Icon(Icons.Filled.ShutterSpeed, contentDescription = "shutter speed")
                                     Text(text = "${image.shutterSpeed}s")
                                 }
                             }
@@ -237,7 +233,6 @@ fun AddPhotoScreen(
                                             val photoDetails = photoUiState.photoDetails
                                             val flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                                             val resolver = context.contentResolver
-
 
                                             resolver.takePersistableUriPermission(uri, flags)
 
@@ -322,6 +317,6 @@ fun PostPhotoButton(
         onClick = onSaveClick,
         modifier = Modifier.padding(25.dp)
     ) {
-        Icon(Icons.Filled.Send, contentDescription = "")
+        Icon(Icons.Filled.Send, contentDescription = "create post")
     }
 }
